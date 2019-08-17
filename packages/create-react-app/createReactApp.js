@@ -66,7 +66,7 @@ let projectType;
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
-  .option('-d, --directory <project-directory>', 'project directory')
+  .option('-d, --projectDirectory <directory>', 'project directory')
   .action(name => { projectName = name; })
   .option('-p, --projectType <type>', 'Generate either app or library')
   .action(type => { projectType = type; })
