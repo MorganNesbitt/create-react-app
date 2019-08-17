@@ -62,15 +62,16 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
+let projectType;
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
-  // .arguments('<project-type>') // TODO(Morgan) add app vs library
   .usage(`${chalk.green('<project-directory>')} [options]`)
-  .action(name => {
-    projectName = name;
-  })
+  .action(name => { projectName = name; })
+  .arguments('<project-type>')
+  .action(type => { projectType = type; })
+  .usage(`${chalk.green('<project-type>')} [options]`)
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
@@ -81,7 +82,7 @@ const program = new commander.Command(packageJson.name)
   .option('--use-pnp')
   .allowUnknownOption()
   .on('--help', () => {
-    console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
+    console.log(`${chalk.green('<project-directory>')} and ${chalk.green('<project-type>')} is required.`);
     console.log();
     console.log(
       `    A custom ${chalk.cyan('--scripts-version')} can be one of:`
@@ -110,15 +111,6 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `    It is not needed unless you specifically want to use a fork.`
-    );
-    console.log();
-    console.log(
-      `    If you have any problems, do not hesitate to file an issue:`
-    );
-    console.log(
-      `      ${chalk.cyan(
-        'https://github.com/facebook/create-react-app/issues/new'
-      )}`
     );
     console.log();
   })
@@ -157,6 +149,35 @@ if (typeof projectName === 'undefined') {
   );
   process.exit(1);
 }
+
+if (typeof projectType === 'undefined') {
+  console.error('Please specify the project type');
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+  );
+  console.log();
+  console.log('For example:');
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
+  console.log();
+  console.log(
+    `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
+  );
+  process.exit(1);
+} else if (projectType !== 'app' && projectType !== 'library') {
+  console.error('Project type must be either app or library');
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+  );
+  console.log();
+  console.log('For example:');
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
+  console.log();
+  console.log(
+    `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
+  );
+  process.exit(1);
+}
+
 
 function printValidationResults(results) {
   if (typeof results !== 'undefined') {
