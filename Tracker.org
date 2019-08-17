@@ -1,0 +1,14 @@
+#+TITLE: Tracker
+
+* Changes
+- Config files
+- setup flow packages
+- setup flow typed
+** For Apps
+- Setup for importing into a main app
+  - exporting as a package
+- Setup serving on html for local dev
+** For Libraries
+- Setup story book
+* Tech Tracking
+- Reference custom react-scripts package
