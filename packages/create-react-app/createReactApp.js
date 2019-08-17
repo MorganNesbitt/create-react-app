@@ -67,9 +67,7 @@ let projectType;
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-type> <project-directory> ', 'Generate either app or library in directory', '')
-  .action((a,b) => { console.warn('a', a); console.warn('b', b); })
-  // .option('-p, --projectType <type>', '', '')
-  // .action((c,d) => { console.warn('c', c); console.warn('d', d); })
+  .action((type,dir) => { projectType = type; projectName = dir; })
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
@@ -114,7 +112,6 @@ const program = new commander.Command(packageJson.name)
   })
   .parse(process.argv);
 
-console.log('program', program);
 
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
@@ -135,8 +132,8 @@ if (program.info) {
     .then(console.log);
 }
 
-if (!projectName) {
-  console.error('Please specify the project directory:');
+if (!projectName || !projectType) {
+  console.error('Please specify the project type directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')} ${chalk.green('<project-directory>')}`
   );
@@ -150,27 +147,14 @@ if (!projectName) {
   process.exit(1);
 }
 
-if (!projectType) {
-  console.error('Please specify the project type');
-  console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
-  );
-  console.log();
-  console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
-  console.log();
-  console.log(
-    `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
-  );
-  process.exit(1);
-} else if (projectType !== 'app' && projectType !== 'library') {
+if (projectType !== 'app' && projectType !== 'library') {
   console.error('Project type must be either app or library');
   console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')} ${chalk.green('<project-directory>')}`
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('app')} ${chalk.green('my-react-app')}`);
   console.log();
   console.log(
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
