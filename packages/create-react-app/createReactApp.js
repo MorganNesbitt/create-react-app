@@ -66,10 +66,10 @@ let projectType;
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
-  .option('-d, --projectDirectory <directory>', 'project directory')
-  .action(console.warn)
-  .option('-p, --projectType <type>', 'Generate either app or library')
-  .action(type => { projectType = type; })
+  .option('-d, --projectDirectory <directory>', 'project directory', '')
+  .action((a,b) => { console.warn('a', a); console.warn('b', b); })
+  .option('-p, --projectType <type>', 'Generate either app or library', '')
+  .action((c,d) => { console.warn('c', c); console.warn('d', d); })
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
