@@ -66,6 +66,7 @@ let projectName;
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
+  // .arguments('<project-type>') // TODO(Morgan) add app vs library
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
     projectName = name;
@@ -78,7 +79,6 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
-  .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -133,7 +133,7 @@ if (program.info) {
         Binaries: ['Node', 'npm', 'Yarn'],
         Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
         npmPackages: ['react', 'react-dom', 'react-scripts'],
-        npmGlobalPackages: ['create-react-app'],
+        npmGlobalPackages: ['generate-react-app'],
       },
       {
         duplicates: true,
@@ -180,19 +180,10 @@ createApp(
   program.scriptsVersion,
   program.useNpm,
   program.usePnp,
-  program.typescript,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(
-  name,
-  verbose,
-  version,
-  useNpm,
-  usePnp,
-  useTypescript,
-  template
-) {
+function createApp(name, verbose, version, useNpm, usePnp, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -225,9 +216,7 @@ function createApp(
   if (!semver.satisfies(process.version, '>=8.10.0')) {
     console.log(
       chalk.yellow(
-        `You are using Node ${
-          process.version
-        } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
           `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
       )
     );
@@ -241,9 +230,7 @@ function createApp(
       if (npmInfo.npmVersion) {
         console.log(
           chalk.yellow(
-            `You are using npm ${
-              npmInfo.npmVersion
-            } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+            `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 5 or higher for a better, fully supported experience.\n`
           )
         );
@@ -257,9 +244,7 @@ function createApp(
       if (yarnInfo.yarnVersion) {
         console.log(
           chalk.yellow(
-            `You are using Yarn ${
-              yarnInfo.yarnVersion
-            } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+            `You are using Yarn ${yarnInfo.yarnVersion} together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
               `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
           )
         );
@@ -295,8 +280,7 @@ function createApp(
     originalDirectory,
     template,
     useYarn,
-    usePnp,
-    useTypescript
+    usePnp
   );
 }
 
@@ -379,22 +363,10 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp,
-  useTypescript
+  usePnp
 ) {
   getInstallPackage(version, originalDirectory).then(packageToInstall => {
     const allDependencies = ['react', 'react-dom', packageToInstall];
-    if (useTypescript) {
-      allDependencies.push(
-        // TODO: get user's node version instead of installing latest
-        '@types/node',
-        '@types/react',
-        '@types/react-dom',
-        // TODO: get version of Jest being used instead of installing latest
-        '@types/jest',
-        'typescript'
-      );
-    }
 
     console.log('Installing packages. This might take a couple of minutes.');
     getPackageName(packageToInstall)
@@ -517,14 +489,7 @@ function getInstallPackage(version, originalDirectory) {
     }
   }
 
-  const scriptsToWarn = [
-    {
-      name: 'react-scripts-ts',
-      message: chalk.yellow(
-        'The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?'
-      ),
-    },
-  ];
+  const scriptsToWarn = [];
 
   for (const script of scriptsToWarn) {
     if (packageToInstall.startsWith(script.name)) {
