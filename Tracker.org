@@ -5,6 +5,11 @@
 - setup flow packages
 - setup flow typed
 - setup cypress
+  - react-scripts browser test script
+  - setup cypress.json
+  - create cypress folder
+  - add cypress command
+  - add cypress dep
 ** For Apps
 - Setup for importing into a main app
   - exporting as a package
