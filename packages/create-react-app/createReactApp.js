@@ -62,16 +62,13 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
-let projectType;
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => { projectName = name; })
-  .arguments('<project-type>')
-  .action(type => { projectType = type; })
-  .usage(`${chalk.green('<project-type>')} [options]`)
+  .option('--projectType <type>', 'Generate either app or library')
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
@@ -150,7 +147,7 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-if (typeof projectType === 'undefined') {
+if (program.projectType === 'undefined') {
   console.error('Please specify the project type');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
@@ -163,7 +160,7 @@ if (typeof projectType === 'undefined') {
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
   );
   process.exit(1);
-} else if (projectType !== 'app' && projectType !== 'library') {
+} else if (program.projectType !== 'app' && program.projectType !== 'library') {
   console.error('Project type must be either app or library');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
