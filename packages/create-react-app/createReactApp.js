@@ -153,7 +153,7 @@ if (typeof projectName === 'undefined') {
 if (typeof projectType === 'undefined') {
   console.error('Please specify the project type');
   console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
   );
   console.log();
   console.log('For example:');
@@ -166,7 +166,7 @@ if (typeof projectType === 'undefined') {
 } else if (projectType !== 'app' && projectType !== 'library') {
   console.error('Project type must be either app or library');
   console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
   );
   console.log();
   console.log('For example:');
