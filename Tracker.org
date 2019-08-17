@@ -4,6 +4,7 @@
 - Config files
 - setup flow packages
 - setup flow typed
+- setup cypress
 ** For Apps
 - Setup for importing into a main app
   - exporting as a package
@@ -12,3 +13,6 @@
 - Setup story book
 * Tech Tracking
 - Reference custom react-scripts package
+* Investigation
+- environment variables are through .env file
+- environment variables must start with "REACT_APP"
