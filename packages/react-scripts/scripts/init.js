@@ -21,7 +21,6 @@ const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 
 function isInGitRepository() {
   try {
@@ -78,6 +77,7 @@ function tryGitInit(appPath) {
 module.exports = function(
   appPath,
   appName,
+  projectType,
   verbose,
   originalDirectory,
   template
@@ -91,13 +91,13 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
-  const useTypeScript = appPackage.dependencies['typescript'] != null;
 
   // Setup the script rules
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
-    test: 'react-scripts test',
+    unitTest: 'react-scripts test',
+    browserTest: 'react-scripts test',
     eject: 'react-scripts eject',
   };
 
@@ -108,7 +108,7 @@ module.exports = function(
 
   // Setup Config
    appPackage.appConfig = {
-    base: './base-config.js',
+    base: './base-config.json',
     dev: './dev-config.js',
     production: './production-config.js'
   };
@@ -132,7 +132,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
+    : path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
@@ -200,10 +200,6 @@ module.exports = function(
       console.error(`\`${command} ${args.join(' ')}\` failed`);
       return;
     }
-  }
-
-  if (useTypeScript) {
-    verifyTypeScriptSetup();
   }
 
   if (tryGitInit(appPath)) {

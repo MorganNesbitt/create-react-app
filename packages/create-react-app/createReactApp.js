@@ -181,6 +181,7 @@ const hiddenProgram = new commander.Command()
 
 createApp(
   projectName,
+  projectType,
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
@@ -188,7 +189,7 @@ createApp(
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, usePnp, template) {
+function createApp(name, projectType, verbose, version, useNpm, usePnp, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -280,6 +281,7 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
   run(
     root,
     appName,
+    projectType,
     version,
     verbose,
     originalDirectory,
@@ -363,6 +365,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
 function run(
   root,
   appName,
+  projectType,
   version,
   verbose,
   originalDirectory,
@@ -413,7 +416,7 @@ function run(
             cwd: process.cwd(),
             args: nodeArgs,
           },
-          [root, appName, verbose, originalDirectory, template],
+          [root, appName, projectType, verbose, originalDirectory, template],
           `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
