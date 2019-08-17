@@ -106,6 +106,13 @@ module.exports = function(
     extends: 'react-app',
   };
 
+  // Setup Config
+   appPackage.appConfig = {
+    base: './base-config.js',
+    dev: './dev-config.js',
+    production: './production-config.js'
+  };
+
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
 
