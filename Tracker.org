@@ -19,5 +19,7 @@
 * Tech Tracking
 - Reference custom react-scripts package
 * Investigation
-- environment variables are through .env file
+- general environment variables are through .env file
+- .env.production
 - environment variables must start with "REACT_APP"
+- https://create-react-app.dev/docs/adding-custom-environment-variables?source=post_page---------------------------
