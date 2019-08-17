@@ -66,10 +66,10 @@ let projectType;
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
-  .option('-d, --projectDirectory <directory>', 'project directory', '')
+  .arguments('<project-type> <project-directory> ', 'Generate either app or library in directory', '')
   .action((a,b) => { console.warn('a', a); console.warn('b', b); })
-  .option('-p, --projectType <type>', 'Generate either app or library', '')
-  .action((c,d) => { console.warn('c', c); console.warn('d', d); })
+  // .option('-p, --projectType <type>', '', '')
+  // .action((c,d) => { console.warn('c', c); console.warn('d', d); })
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
@@ -114,6 +114,8 @@ const program = new commander.Command(packageJson.name)
   })
   .parse(process.argv);
 
+console.log('program', program);
+
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
   return envinfo
@@ -136,11 +138,11 @@ if (program.info) {
 if (!projectName) {
   console.error('Please specify the project directory:');
   console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')} ${chalk.green('<project-directory>')}`
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('app')} ${chalk.green('my-react-app')}`);
   console.log();
   console.log(
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
