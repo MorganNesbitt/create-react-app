@@ -67,7 +67,7 @@ let projectType;
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .option('-d, --projectDirectory <directory>', 'project directory')
-  .action(name => { projectName = name; })
+  .action(console.warn)
   .option('-p, --projectType <type>', 'Generate either app or library')
   .action(type => { projectType = type; })
   .option('--verbose', 'print additional logs')
@@ -133,7 +133,7 @@ if (program.info) {
     .then(console.log);
 }
 
-if (typeof projectName === 'undefined') {
+if (!projectName) {
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
@@ -148,7 +148,7 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-if (projectType === 'undefined') {
+if (!projectType) {
   console.error('Please specify the project type');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')}`
