@@ -88,6 +88,11 @@ module.exports = function(webpackEnv) {
   console.warn('shouldDevBuildUseProductionApiConfig', shouldDevBuildUseProductionApiConfig);
   console.warn('shouldUseProductionApiConfig', shouldUseProductionApiConfig);
 
+  console.warn('prod path', paths.appProdApiConfig);
+  console.warn('def path', paths.appDevApiConfig);
+
+  console.warn('required configs', require(paths.appProdApiConfig), require(paths.appDevApiConfig));
+
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
