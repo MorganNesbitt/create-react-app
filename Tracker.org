@@ -2,6 +2,9 @@
 
 * Desired Changes
 - Config files
+  - Do we need some way to extend configs? add paths to package json
+    - take keys and map to some env variable?
+    - kinda brittle to map to env variables
 - look into keeping content hash when app or library
   - since its a package only the main app needs to be discernable
 - setup flow packages

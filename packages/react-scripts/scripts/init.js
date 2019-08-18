@@ -109,7 +109,6 @@ module.exports = function(
 
   // Setup Config
    appPackage.appConfig = {
-    base: './base-config.json',
     dev: './dev-config.js',
     production: './production-config.js'
   };

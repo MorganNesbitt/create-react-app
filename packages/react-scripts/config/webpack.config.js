@@ -83,7 +83,7 @@ module.exports = function(webpackEnv) {
   const env = getClientEnvironment(publicUrl);
 
   console.warn('env', env);
-  const shouldDevBuildUseProductionApiConfig = !!env.REACT_APP_USE_DEV_API;
+  const shouldDevBuildUseProductionApiConfig = !env.raw.REACT_APP_USE_DEV_API;
   const shouldUseProductionApiConfig = isEnvProduction ? true : shouldDevBuildUseProductionApiConfig;
   console.warn('shouldDevBuildUseProductionApiConfig', shouldDevBuildUseProductionApiConfig);
   console.warn('shouldUseProductionApiConfig', shouldUseProductionApiConfig);
@@ -608,8 +608,8 @@ module.exports = function(webpackEnv) {
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin({
-        ...JSON.parse(env.stringified),
-        Api: shouldUseProductionApiConfig ? require(paths.appProdApiConfig) : require(paths.appDevApiConfig)
+        ['process.env']: env.stringify(),
+        ApiConfig: shouldUseProductionApiConfig ? require(paths.appProdApiConfig) : require(paths.appDevApiConfig)
       }),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
