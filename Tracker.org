@@ -1,9 +1,12 @@
 #+TITLE: Tracker
 
-* Changes
+* Desired Changes
 - Config files
+- look into keeping content hash when app or library
+  - since its a package only the main app needs to be discernable
 - setup flow packages
 - setup flow typed
+- setup eslint
 - setup cypress
   - react-scripts browser test script
   - setup cypress.json
@@ -13,13 +16,33 @@
 ** For Apps
 - Setup for importing into a main app
   - exporting as a package
+- When importing into main app make sure deps are removed correctly
+  - Like react, react-dom, react-router, react-router-dom, redux, etc
 - Setup serving on html for local dev
 ** For Libraries
 - Setup story book
 * Tech Tracking
 - Reference custom react-scripts package
 * Investigation
+** Env
 - general environment variables are through .env file
 - .env.production
 - environment variables must start with "REACT_APP"
 - https://create-react-app.dev/docs/adding-custom-environment-variables?source=post_page---------------------------
+** Build types (keep amount of commands shortened)
+- Local Builds: npm run start
+- QE BUILDS:
+- Normal Master BUILDS:
+- Beta BUILDS:
+- Prod BUILDS:
+** Setup Tracking
+*** Look into passing library usage or something so things arent duped
+*** Setup Error tracking
+- Sentry, Rollbar, Airbrake, etc
+*** Setup user tracking
+- Mixpanel, - mixpanel library?
+  - take in props for tracking, assuming user is already identified
+** Cache Warming
+** Uglifying
+- ascii only?
+- screw ie8?
