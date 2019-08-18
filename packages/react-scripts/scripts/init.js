@@ -94,6 +94,7 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
+    ['start:devApi']: 'REACT_APP_USE_DEV_API=true react-scripts start',
     start: 'react-scripts start',
     build: 'react-scripts build',
     unitTest: 'react-scripts test',

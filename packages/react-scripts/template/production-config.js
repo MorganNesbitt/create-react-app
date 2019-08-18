@@ -1,5 +1,7 @@
 const base = require('./base-config.json')
 
-const prodConfig = {};
+const prodConfig = {
+  prodConfig: true
+};
 
 module.exports = Object.assign({}, base, prodConfig);
