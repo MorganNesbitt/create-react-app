@@ -614,7 +614,7 @@ module.exports = function(webpackEnv) {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin({
         ['process.env']: env.stringify(),
-        ApiConfig: shouldUseProductionApiConfig ? require(paths.appProdApiConfig) : require(paths.appDevApiConfig)
+        ['process.ApiConfig']: shouldUseProductionApiConfig ? require(paths.appProdApiConfig) : require(paths.appDevApiConfig)
       }),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
