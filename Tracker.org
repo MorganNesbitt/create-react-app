@@ -52,3 +52,7 @@
 ** Investigate how to have css dynamically imported on imported builds
 - Or maybe require people to manually import?
   - seems like incredible effort and build path knowledge
+** Add different templates for
+- [ ] embedded app
+- [ ] servable app
+- [ ] library
