@@ -107,7 +107,7 @@ module.exports = function(
     extends: 'react-app',
   };
 
-  appPackage.projectType = `"${projectType}"`;
+  appPackage.projectType = projectType;
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;

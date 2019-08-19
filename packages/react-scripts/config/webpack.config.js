@@ -147,6 +147,9 @@ module.exports = function(webpackEnv) {
   };
 
   return {
+    // TODO(Morgan) Look into storing source maps, maybe read from package.json
+    // default for app / library, create with React/ReactDOM
+    // externals: {},
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -275,13 +278,15 @@ module.exports = function(webpackEnv) {
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks: {
-        chunks: 'all',
-        name: true,
-      },
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: isContainerApp ? true : 'single', // TODO(Morgan) look into single when exporting for main app
+      ...(isContainerApp ? {
+        splitChunks: {
+          chunks: 'all',
+          name: true,
+        },
+        // Keep the runtime chunk separated to enable long term caching
+        // https://twitter.com/wSokra/status/969679223278505985
+        runtimeChunk: true, // TODO(Morgan) look into single when exporting for main app
+      } : {})
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
