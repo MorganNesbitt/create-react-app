@@ -147,8 +147,8 @@ if (!projectName || !projectType) {
   process.exit(1);
 }
 
-if (projectType !== 'app' && projectType !== 'library') {
-  console.error('Project type must be either app or library');
+if (projectType !== 'app' && projectType !== 'library' && projectType !== 'container') {
+  console.error('Project type must be either app or library or container');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-type>')} ${chalk.green('<project-directory>')}`
   );
@@ -160,6 +160,15 @@ if (projectType !== 'app' && projectType !== 'library') {
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
   );
   process.exit(1);
+}
+
+switch(projectType) {
+  case 'app':
+    projectType = 'embeddedApp';
+  case 'library':
+    projectType = 'library';
+  case 'container':
+    projectType = 'servableApp';
 }
 
 

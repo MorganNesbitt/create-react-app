@@ -47,5 +47,5 @@
   - take in props for tracking, assuming user is already identified
 ** Cache Warming
 ** Uglifying
-- ascii only?
-- screw ie8?
+- [x] ascii only?
+- [x] screw ie8?
