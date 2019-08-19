@@ -165,10 +165,13 @@ if (projectType !== 'app' && projectType !== 'library' && projectType !== 'conta
 switch(projectType) {
   case 'app':
     projectType = 'embeddedApp';
+    break;
   case 'library':
     projectType = 'library';
+    break;
   case 'container':
     projectType = 'servableApp';
+    break;
 }
 
 
