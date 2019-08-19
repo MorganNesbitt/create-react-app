@@ -82,16 +82,8 @@ module.exports = function(webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl);
 
-  console.warn('env', env);
   const shouldDevBuildUseProductionApiConfig = !env.raw.REACT_APP_USE_DEV_API;
   const shouldUseProductionApiConfig = isEnvProduction ? true : shouldDevBuildUseProductionApiConfig;
-  console.warn('shouldDevBuildUseProductionApiConfig', shouldDevBuildUseProductionApiConfig);
-  console.warn('shouldUseProductionApiConfig', shouldUseProductionApiConfig);
-
-  console.warn('prod path', paths.appProdApiConfig);
-  console.warn('def path', paths.appDevApiConfig);
-
-  console.warn('required configs', require(paths.appProdApiConfig), require(paths.appDevApiConfig));
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
